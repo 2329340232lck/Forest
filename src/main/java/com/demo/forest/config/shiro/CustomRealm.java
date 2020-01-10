@@ -1,5 +1,6 @@
 package com.demo.forest.config.shiro;
 
+import com.demo.forest.config.mybatis.service.MybatisService;
 import com.demo.forest.zhkz.system.domain.UserInfo;
 import com.demo.forest.zhkz.system.service.UserService;
 import org.apache.shiro.authc.*;
@@ -8,6 +9,7 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
@@ -17,8 +19,11 @@ public class CustomRealm extends AuthorizingRealm {
 
     private UserService userService;
 
-    private CustomRealm(UserService userService) {
+    private MybatisService mybatisService;
+
+    private CustomRealm(UserService userService, MybatisService mybatisService) {
         this.userService = userService;
+        this.mybatisService = mybatisService;
     }
 
     //权限验证
@@ -47,6 +52,7 @@ public class CustomRealm extends AuthorizingRealm {
         if (userInfo == null) {
             throw new UnknownAccountException("当前账号不存在!");
         }
-        return new SimpleAuthenticationInfo(principal, userInfo.getUserPassword(), getName());
+        ByteSource bytes = ByteSource.Util.bytes(principal);
+        return new SimpleAuthenticationInfo(principal, userInfo.getUserPassword(), bytes, getName());
     }
 }
