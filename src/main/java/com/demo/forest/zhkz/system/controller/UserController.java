@@ -5,12 +5,12 @@ import com.demo.forest.config.exception.custom.ExceptionEnum;
 import com.demo.forest.util.HttpUtil;
 import com.demo.forest.util.ResponseInfo;
 import com.demo.forest.zhkz.system.domain.UserInfo;
+import com.demo.forest.zhkz.system.service.LogService;
 import com.demo.forest.zhkz.system.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,14 +21,21 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping(value = "/user")
 public class UserController {
 
-    @Autowired
     private UserService userService;
+
+    private LogService logService;
+
+    public UserController(UserService userService, LogService logService) {
+        this.userService = userService;
+        this.logService = logService;
+    }
 
     @RequestMapping(value = "/login.ajax", method = RequestMethod.POST)
     public ResponseInfo userLogin(UserInfo userInfo, HttpServletResponse response) throws Exception {
         Subject subject = SecurityUtils.getSubject();
         try {
             subject.login(new UsernamePasswordToken(userInfo.getUserName(), userInfo.getUserPassword()));
+            logService.insertLogInfo("用户" + userInfo.getUserName() + "登录系统!");
         } catch (IncorrectCredentialsException | UnknownAccountException e) {
             return HttpUtil.setErrorCode(response, ResponseInfo.ERROR(ExceptionEnum.USER_LOGIN_FAIL));
         } catch (DisabledAccountException e) {

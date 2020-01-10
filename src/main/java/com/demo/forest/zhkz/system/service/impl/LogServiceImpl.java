@@ -9,6 +9,11 @@ import com.demo.forest.zhkz.system.service.LogService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.util.DateUtils;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 @Service
 @Slf4j
@@ -26,7 +31,15 @@ public class LogServiceImpl implements LogService {
     }
 
     @Override
-    public void insertLogInfo(LogInfo logInfo) throws Exception {
+    public void insertLogInfo(String message) throws Exception {
+        LogInfo logInfo = new LogInfo();
+        logInfo.setLogCreateTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        logInfo.setLogContent(message);
         mybatisService.insert(logInfo);
+    }
+
+    public static void main(String[] args) {
+        Calendar now = DateUtils.createNow();
+        System.out.println("now = " + now);
     }
 }

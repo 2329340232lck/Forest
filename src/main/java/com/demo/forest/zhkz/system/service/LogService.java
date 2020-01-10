@@ -8,5 +8,5 @@ public interface LogService {
 
     IPage<LogInfo> queryLogInfo(Page page, LogInfo logInfo) throws Exception;
 
-    void insertLogInfo(LogInfo logInfo) throws Exception;
+    void insertLogInfo(String Message) throws Exception;
 }
