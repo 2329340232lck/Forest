@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.forest.zhkz.system.dao.UserDao">
+    <!--结果集映射-->
+    <resultMap id="MenuVo" type="com.demo.forest.zhkz.system.vo.MenuVo">
+        <result column="menuId" property="menuId"></result>
+        <collection property="childMenu" column="menuId" select="getChildMenu">
+        </collection>
+    </resultMap>
+    <!--查询用户信息-->
+    <select id="queryUserInfo" resultType="com.demo.forest.zhkz.system.vo.UserInfoVo">
+        SELECT
+        userId,
+        userName,
+        userPassword,
+        roleId,
+        (SELECT
+        dictionariesValue
+        FROM
+        zhkz_dictionaries
+        WHERE
+        dictionariesKey = roleId
+        AND dictionariesTable = 'roleId') AS roleIdName,
+        userRealName
+        FROM
+        zhkz_user
+        <where>
+            <if test="userInfo.roleId != null and userInfo.roleId != ''">
+                AND roleId = #{userInfo.roleId}
+            </if>
+        </where>
+    </select>
+
+    <!--通过用户id查询对应菜单信息-->
+    <select id="queryMenuInfoByUser" resultMap="MenuVo">
+        SELECT
+            z1.*
+        FROM
+            zhkz_menu z1
+        LEFT JOIN zhkz_menu_contorl z2 ON z1.menuId = z2.menuId
+        LEFT JOIN zhkz_user z3 ON z3.roleId = z2.roleId
+        WHERE
+            Z3.userId = #{userId}
+            AND z1.isParent = 1
+    </select>
+        <select id="getChildMenu" resultType="com.demo.forest.zhkz.system.vo.MenuVo">
+            SELECT * FROM zhkz_menu WHERE isParent = '0' AND parentId = #{menuId}
+        </select>
+    <!--获取用户角色集合-->
+    <select id="getUserRoles" resultType="java.lang.String">
+        SELECT
+            roleName
+        FROM
+            zhkz_role z1
+        INNER JOIN zhkz_user z2 ON z2.roleId = z1.roleId
+        WHERE
+            z2.userName = #{userName}
+    </select>
+</mapper>

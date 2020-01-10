@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="main">
+    <!--header-->
+    <div class="main_top" style="text-align: center">
+        <el-row>
+            <h1>系统日志</h1>
+        </el-row>
+        <el-row>
+            <el-form :model="dataQuery" :inline="true" label-width="auto">
+                <el-col :span="8">
+                    <el-form-item label="日期">
+                        <el-date-picker
+                                v-model="dataCache.dateCache"
+                                type="daterange"
+                                size="small"
+                                value-format="yyyy-MM-dd"
+                                @change="dateChangeHandle"
+                                range-separator="至"
+                                start-placeholder="开始日期"
+                                end-placeholder="结束日期">
+                        </el-date-picker>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="4">
+                    <div style="min-height: 1px;background-color: transparent"></div>
+                </el-col>
+                <el-col :span="6">
+                    <div style="min-height: 1px;background-color: transparent"></div>
+                </el-col>
+                <el-col :span="6" class="button_box">
+                    <el-button type="primary" size="small" @click="initTable">
+                        <i class="el-icon-search"></i> 查询
+                    </el-button>
+                </el-col>
+            </el-form>
+        </el-row>
+    </div>
+    <!--body-->
+    <div class="main_center">
+        <el-table :data="tableData"
+                  height="450"
+                  size="medium"
+                  v-loading="loading">
+            <el-table-column
+                    label="日志内容"
+                    prop="logContent">
+            </el-table-column>
+            <el-table-column
+                    label="记录日期"
+                    prop="logCreateTime">
+            </el-table-column>
+        </el-table>
+        <div>
+            <el-pagination
+                    background
+                    @size-change="sizeChangeHandle"
+                    @current-change="currentChangeHandle"
+                    :page-sizes="[10,20,50,100]"
+                    layout="prev, pager, next, sizes, total"
+                    :total="dataQuery.total">
+            </el-pagination>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="/js/log.js"></script>
+</html>

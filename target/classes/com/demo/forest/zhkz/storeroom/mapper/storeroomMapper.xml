@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.forest.zhkz.storeroom.dao.StoreroomDao">
+    <select id="queryStoreroomInfo" resultType="com.demo.forest.zhkz.storeroom.vo.StoreroomInfoVo">
+        SELECT
+			z1.storeroomId,
+			z1.storeroomDate,
+			z2.gradeId,
+			z2.gradeName,
+			z3.userName,
+			z1.userId
+		FROM
+			zhkz_storeroom z1
+		LEFT JOIN zhkz_grade z2 ON z1.gradeId = z2.gradeId
+		LEFT JOIN zhkz_user z3 ON z1.userId = z3.userId
+		<where>
+			<if test="storeroomInfo.gradeName != null and storeroomInfo.gradeName != ''">
+				AND z2.gradeName LIKE CONCAT('%',#{storeroomInfo.gradeName},'%')
+			</if>
+			<if test="storeroomInfo.startDate != null and storeroomInfo.startDate != ''">
+				AND z1.storeroomDate <![CDATA[ >= ]]> DATE_FORMAT(#{storeroomInfo.startDate},'%y-%m-%d 00:00')
+			</if>
+			<if test="storeroomInfo.endDate != null and storeroomInfo.endDate != ''">
+				AND z1.storeroomDate <![CDATA[ <= ]]> DATE_FORMAT(#{storeroomInfo.endDate},'%y-%m-%d 23:59')
+			</if>
+		</where>
+		ORDER BY z1.storeroomId DESC
+    </select>
+    <select id="getStoreroom" resultType="com.demo.forest.zhkz.storeroom.vo.StorageVo">
+		SELECT
+			z1.id,
+			z1.resourceId,
+			z1.resourceNumber,
+			z2.resourceName,
+			z2.resourcePreventType,
+			(SELECT
+					dictionariesValue
+				FROM
+					zhkz_dictionaries
+				WHERE
+					dictionariesKey = z2.resourcePreventType
+				AND dictionariesTable = 'resourcePreventType') AS resourcePreventTypeName,
+			z2.resourceType,
+			(SELECT
+					dictionariesValue
+				FROM
+					zhkz_dictionaries
+				WHERE
+					dictionariesKey = z2.resourceType
+				AND dictionariesTable = 'resourceType') AS resourceTypeName,
+			z2.resourcePurpose
+		FROM
+			zhkz_storage z1
+		LEFT JOIN zhkz_resource z2 ON z1.resourceId = z2.resourceId
+		WHERE
+			z1.storeroomId = #{storeroomId}
+    </select>
+    <insert id="insertStoreroomInfo" useGeneratedKeys="true" keyProperty="storeroomId" keyColumn="storeroomId">
+		INSERT INTO zhkz_storeroom (gradeId,userId,storeroomDate)
+		VALUES (#{gradeId},#{userId},#{storeroomDate})
+    </insert>
+</mapper>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.forest.zhkz.data_manage.dao.MouseDao">
+
+    <select id="queryMouseInfo" resultType="com.demo.forest.zhkz.data_manage.domain.MouseInfo">
+        select
+        mouseId,
+        mouseName,
+        mouseFood,
+        mouseBreed,
+        mouseEnemy,
+        mouseControlPlan,
+        mouseImg,
+        mouseHarm
+        FROM zhkz_mouse
+        <where>
+            <if test="mouseInfo.mouseName != null and mouseInfo.mouseName != ''">
+                mouseName LIKE concat('%',#{mouseInfo.mouseName},'%')
+            </if>
+        </where>
+        ORDER BY mouseId DESC
+    </select>
+</mapper>

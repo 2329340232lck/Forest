@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.forest.zhkz.disaster_control.dao.GradeDao">
+
+    <select id="queryGraderInfo" resultType="com.demo.forest.zhkz.disaster_control.vo.GradeInfoVo">
+        SELECT
+        g.gradeId,
+        g.gradeName,
+        g.gradeCreationDate,
+        g.gradeLeader,
+        g.gradeNumber,
+        g.gradeLeaderPhone,
+        g.areaId,
+        a.areaName
+        FROM
+        zhkz_grade g
+        LEFT JOIN zhkz_area a ON a.areaId = g.areaId
+        <where>
+            <if test="gradeInfo.gradeName != null and gradeInfo.gradeName != ''">
+                AND g.gradeName LIKE CONCAT('%',#{gradeInfo.gradeName},'%')
+            </if>
+            <if test="gradeInfo.areaName != null and gradeInfo.areaName != ''">
+                AND a.areaName LIKE CONCAT('%',#{gradeInfo.areaName},'%')
+            </if>
+        </where>
+    </select>
+
+</mapper>

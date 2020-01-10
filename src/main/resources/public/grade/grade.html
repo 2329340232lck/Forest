@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="main">
+    <!--header-->
+    <div class="main_top" style="text-align: center">
+        <el-row>
+            <h1>小班管理</h1>
+        </el-row>
+        <el-row>
+            <el-form :model="dataQuery" :inline="true" label-width="auto">
+                <el-col :span="6">
+                    <el-form-item label="小班名称">
+                        <el-input v-model="dataQuery.gradeName" size="small" clearable placeholder="请输入小班名称"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="6">
+                    <el-form-item label="负责区域">
+                        <el-input v-model="dataQuery.areaName" size="small" clearable placeholder="请输入负责区域"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="6">
+                    <div style="min-height: 1px;background-color: transparent"></div>
+                </el-col>
+                <el-col :span="6" class="button_box">
+                    <el-button type="primary" size="small" @click="initTable">
+                        <i class="el-icon-search"></i> 查询
+                    </el-button>
+                    <el-button type="primary" size="small" @click="openInsert()">
+                        <i class="el-icon-plus"></i> 新增
+                    </el-button>
+                </el-col>
+            </el-form>
+        </el-row>
+    </div>
+    <!--body-->
+    <div class="main_center">
+        <el-table :data="tableData"
+                  height="450"
+                  size="medium"
+                  v-loading="loading">
+            <el-table-column
+                    label="小班名称"
+                    prop="gradeName">
+            </el-table-column>
+            <el-table-column
+                    label="负责人"
+                    prop="gradeLeader">
+            </el-table-column>
+            <el-table-column
+                    label="负责人电话"
+                    prop="gradeLeaderPhone">
+            </el-table-column>
+            <el-table-column
+                    label="负责区域"
+                    prop="areaName"
+            ></el-table-column>
+            <el-table-column
+                    label="操作"
+            >
+                <template slot-scope="scope">
+                    <el-button @click="editInfo(scope.row)" type="primary" icon="el-icon-edit" size="mini">编辑
+                    </el-button>
+                    <el-button @click="deleteInfo(scope.row)" type="danger" icon="el-icon-delete" size="mini">删除
+                    </el-button>
+                </template>
+            </el-table-column>
+        </el-table>
+        <div>
+            <el-pagination
+                    background
+                    @size-change="sizeChangeHandle"
+                    @current-change="currentChangeHandle"
+                    :page-sizes="[10,20,50,100]"
+                    layout="prev, pager, next, sizes, total"
+                    :total="dataQuery.total">
+            </el-pagination>
+        </div>
+    </div>
+    <el-dialog :visible.sync="dialogCache.visible" :title="dialogCache.title" @close="resetForm('form')"
+               :close-on-click-modal="false" width="30%" center>
+        <el-form :model="formData" ref="form" label-width="auto" :rules="submitRules">
+            <el-form-item label="名称" prop="gradeName">
+                <el-input v-model="formData.gradeName" placeholder="请输入名称" clearable></el-input>
+            </el-form-item>
+            <el-form-item label="负责人" prop="gradeLeader">
+                <el-input v-model="formData.gradeLeader" placeholder="请输入负责人" clearable></el-input>
+            </el-form-item>
+            <el-form-item label="负责人电话" prop="gradeLeaderPhone">
+                <el-input v-model="formData.gradeLeaderPhone" placeholder="请输入负责人电话" clearable></el-input>
+            </el-form-item>
+            <el-form-item label="人员数量" prop="gradeNumber">
+                <el-input-number :min="0" v-model="formData.gradeNumber"></el-input-number>
+            </el-form-item>
+            <el-form-item label="负责区域" prop="areaId">
+                <el-select v-model="formData.areaId" placeholder="请选择负责区域" clearable>
+                    <el-option v-for="item in dataCache.areaName"
+                               :key="item.areaId"
+                               :label="item.areaName"
+                               :value="item.areaId">
+                    </el-option>
+                </el-select>
+            </el-form-item>
+        </el-form>
+        <div slot="footer">
+            <el-button type="success" size="medium" round @click="submitForm('form')">
+                <i class="el-icon-edit"></i> 确定
+            </el-button>
+            <el-button type="primary" size="medium" round @click="dialogCache.visible=false">
+                <i class="el-icon-close"></i> 关闭
+            </el-button>
+        </div>
+    </el-dialog>
+</div>
+</body>
+<script type="text/javascript" src="/js/grade.js"></script>
+</html>

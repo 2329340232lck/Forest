@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.forest.zhkz.storeroom.dao.EquipmentDao">
+    <select id="queryEquipmentInfo" resultType="com.demo.forest.zhkz.storeroom.vo.EquipmentInfoVo">
+        SELECT
+        resourceId,
+        resourceName,
+        resourceType,
+        resourcePreventType,
+        (SELECT
+        dictionariesValue
+        FROM
+        zhkz_dictionaries
+        WHERE
+        dictionariesKey = z1.resourceType
+        AND dictionariesTable = 'resourceType') AS resourceTypeName,
+        (SELECT
+        dictionariesValue
+        FROM
+        zhkz_dictionaries
+        WHERE
+        dictionariesKey = z1.resourcePreventType
+        AND dictionariesTable = 'resourcePreventType') AS resourcePreventTypeName,
+        resourcePurpose
+        FROM
+        zhkz_resource z1
+        <where>
+            <if test="equipmentInfo.resourceName != null and equipmentInfo.resourceName != ''">
+            and z1.resourceName like concat('%',#{equipmentInfo.resourceName},'%')
+            </if>
+            <if test="equipmentInfo.resourcePreventType != null and equipmentInfo.resourcePreventType != ''">
+            and z1.resourcePreventType = #{equipmentInfo.resourcePreventType}
+            </if>
+            <if test="equipmentInfo.resourceType != null and equipmentInfo.resourceType != ''">
+            and z1.resourceType = #{equipmentInfo.resourceType}
+            </if>
+        </where>
+    </select>
+</mapper>

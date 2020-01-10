@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.forest.zhkz.data_manage.dao.PestsDao">
+    <select id="queryPestsInfo" resultType="com.demo.forest.zhkz.data_manage.domain.PestsInfo">
+        SELECT
+        pestsId,
+        pestsName,
+        pestsHost,
+        pestsBreed,
+        pestsEnemy,
+        pestsHarm,
+        pestsControlPlan,
+        pestsLarvaImg,
+        pestsAdultImg
+        FROM
+        zhkz_pests
+        <where>
+            <if test="pestsInfo.pestsName != null and pestsInfo.pestsName != ''">
+                AND pestsName LIKE CONCAT('%',#{pestsInfo.pestsName},'%')
+            </if>
+            <if test="pestsInfo.pestsHost != null and pestsInfo.pestsHost != ''">
+                AND pestsHost LIKE CONCAT('%',#{pestsInfo.pestsHost},'%')
+            </if>
+        </where>
+        ORDER BY pestsId ASC
+    </select>
+</mapper>

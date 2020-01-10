@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.forest.zhkz.disaster_control.dao.EventDao">
+
+    <select id="queryEventInfo" resultType="com.demo.forest.zhkz.disaster_control.vo.EventInfoVo">
+        SELECT
+        z1.eventId,
+        z1.eventName,
+        z1.areaId,
+        (SELECT
+        dictionariesValue
+        FROM
+        zhkz_dictionaries
+        WHERE
+        dictionariesKey = eventDisasterStage
+        AND dictionariesTable = 'disasterStage') eventDisasterStageName,
+        eventDisasterStage,
+        eventDisasterType,
+        eventControlPlan,
+        eventDiscoverer,
+        eventExpertAdvice,
+        eventImg,
+        eventInfluenceArea,
+        eventLoss,
+        eventRemark,
+        DATE_FORMAT(eventStartTime,'%Y-%m-%d') as eventStartTime,
+        z2.areaName
+        FROM
+        zhkz_event z1
+        LEFT JOIN zhkz_area z2 ON z2.areaId = z1.areaId
+        <where>
+            <if test="eventInfo.eventName != null and eventInfo.eventName != ''">
+                AND z1.eventName LIKE CONCAT('%',#{eventInfo.eventName},'%')
+            </if>
+            <if test="eventInfo.eventDisasterStage != null and eventInfo.eventDisasterStage != ''">
+                AND z1.eventDisasterStage = #{eventInfo.eventDisasterStage}
+            </if>
+            <if test="eventInfo.areaName != null and eventInfo.areaName != ''">
+                AND z2.areaName LIKE CONCAT('%',#{eventInfo.areaName},'%')
+            </if>
+            <if test="eventInfo.startDate != null and eventInfo.startDate != ''">
+                AND z1.eventStartTime
+                BETWEEN DATE_FORMAT(#{eventInfo.startDate},'%Y-%m-%d 00:00:00') AND
+                DATE_FORMAT(#{eventInfo.endDate},'%Y-%m-%d 23:59:59')
+            </if>
+        </where>
+    </select>
+</mapper>

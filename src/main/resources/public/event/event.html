@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="main">
+    <!--header-->
+    <div class="main_top" style="text-align: center">
+        <el-row>
+            <h1>事件记录</h1>
+        </el-row>
+        <el-form :model="dataQuery" :inline="true" label-width="auto">
+            <el-row :gutter="20">
+                <el-col :span="6">
+                    <el-form-item label="事件名称">
+                        <el-input v-model="dataQuery.eventName" size="small" clearable placeholder="请输入事件名称"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="6">
+                    <el-form-item label="灾情状态">
+                        <el-select size="small" v-model="dataQuery.eventDisasterStage" placeholder="请选择" clearable>
+                            <el-option v-for="item in dataCache.eventDisasterStage"
+                                       :key="item.dictionariesKey"
+                                       :label="item.dictionariesValue"
+                                       :value="item.dictionariesKey">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="6">
+                    <el-form-item label="发生位置">
+                        <el-input v-model="dataQuery.areaName" size="small" clearable placeholder="请输入发生位置"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="6" class="button_box">
+                    <el-button type="primary" size="small" @click="initTable">
+                        <i class="el-icon-search"></i> 查询
+                    </el-button>
+                    <el-button type="primary" size="small" @click="openInsert()">
+                        <i class="el-icon-plus"></i> 新增
+                    </el-button>
+                </el-col>
+            </el-row>
+            <el-row :gutter="20">
+                <el-col :span="8">
+                    <el-form-item>
+                        <el-date-picker
+                                v-model="dataCache.dateCache"
+                                size="small"
+                                type="daterange"
+                                value-format="yyyy-MM-dd"
+                                @change="dateChangeHandle"
+                                range-separator="至"
+                                start-placeholder="开始日期"
+                                end-placeholder="结束日期"
+                        ></el-date-picker>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+        </el-form>
+    </div>
+    <!--body-->
+    <div class="main_center">
+        <el-table :data="tableData"
+                  height="450"
+                  size="medium"
+                  v-loading="loading">
+            <el-table-column
+                    label="事件名称"
+                    prop="eventName">
+            </el-table-column>
+            <el-table-column
+                    label="日期"
+                    prop="eventStartTime">
+            </el-table-column>
+            <el-table-column
+                    label="发生位置"
+                    prop="areaName">
+            </el-table-column>
+            <el-table-column
+                    label="防治方案"
+                    prop="eventControlPlan"
+            ></el-table-column>
+            <el-table-column
+                    label="灾情状态"
+                    prop="eventDisasterStageName"
+            ></el-table-column>
+            <el-table-column
+                    label="操作"
+            >
+                <template slot-scope="scope">
+                    <el-button @click="editInfo(scope.row)" type="primary" icon="el-icon-edit" size="mini">编辑
+                    </el-button>
+                    <el-button @click="deleteInfo(scope.row)" type="danger" icon="el-icon-delete" size="mini">删除
+                    </el-button>
+                </template>
+            </el-table-column>
+        </el-table>
+        <div>
+            <el-pagination
+                    background
+                    @size-change="sizeChangeHandle"
+                    @current-change="currentChangeHandle"
+                    :page-sizes="[10,20,50,100]"
+                    layout="prev, pager, next, sizes, total"
+                    :total="dataQuery.total">
+            </el-pagination>
+        </div>
+    </div>
+    <el-dialog :visible.sync="dialogCache.visible" :title="dialogCache.title" @close="resetForm('form')"
+               :close-on-click-modal="false" center>
+        <el-form :model="formData" ref="form" label-width="auto" :rules="submitRules">
+            <el-row :gutter="20">
+                <el-col :span="12">
+                    <el-form-item label="事件名称" prop="eventName">
+                        <el-input v-model="formData.eventName" placeholder="请输入事件名称" clearable></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                    <el-form-item label="灾区图片">
+                        <el-upload
+                                action="">
+                            <el-button size="small" type="primary">点击上传</el-button>
+                        </el-upload>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+            <el-row :gutter="20">
+                <el-col :span="12">
+                    <el-form-item label="日期" prop="eventStartTime">
+                        <el-date-picker
+                                placeholder="请选择日期"
+                                v-model="formData.eventStartTime"
+                                value-format="yyyy-MM-dd"
+                                clearable></el-date-picker>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                    <el-form-item label="灾害类型" prop="eventDisasterType">
+                        <el-select v-model="formData.eventDisasterType" clearable>
+                            <el-option v-for="item in dataCache.disasterType"
+                                       :key="item.dictionariesKey"
+                                       :label="item.dictionariesValue"
+                                       :value="item.dictionariesKey">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+            <el-row :gutter="20">
+                <el-col :span="12">
+                    <el-form-item label="灾情阶段" prop="eventDisasterStage">
+                        <el-select v-model="formData.eventDisasterStage" clearable>
+                            <el-option v-for="item in dataCache.eventDisasterStage"
+                                       :key="item.dictionariesKey"
+                                       :label="item.dictionariesValue"
+                                       :value="item.dictionariesKey">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                    <el-form-item label="灾情描述">
+                        <el-input type="textarea" v-model="formData.eventRemark" placeholder="请输入灾情描述"
+                                  clearable></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+            <el-row :gutter="20">
+                <el-col :span="12">
+                    <el-form-item label="发生位置" prop="areaId">
+                        <el-select v-model="formData.areaId" clearable>
+                            <el-option v-for="item in dataCache.areaName"
+                                       :key="item.areaId"
+                                       :label="item.areaName"
+                                       :value="item.areaId">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                    <el-form-item label="发现途径" prop="eventDiscoverer">
+                        <el-select v-model="formData.eventDiscoverer" clearable>
+                            <el-option v-for="item in dataCache.eventDiscoverer"
+                                       :key="item.dictionariesKey"
+                                       :label="item.dictionariesValue"
+                                       :value="item.dictionariesKey">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+            <el-row :gutter="20">
+                <el-col :span="12">
+                    <el-form-item label="初步损失">
+                        <el-input v-model="formData.eventLoss" placeholder="请输入初步损失" clearable></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                    <el-form-item label="影响面积">
+                        <el-input v-model="formData.eventInfluenceArea" placeholder="请输入影响面积" clearable></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+        </el-form>
+        <div slot="footer">
+            <el-button type="success" size="medium" round @click="submitForm('form')">
+                <i class="el-icon-edit"></i> 确定
+            </el-button>
+            <el-button type="primary" size="medium" round @click="dialogCache.visible=false">
+                <i class="el-icon-close"></i> 关闭
+            </el-button>
+        </div>
+    </el-dialog>
+</div>
+</body>
+<script type="text/javascript" src="/js/event.js"></script>
+</html>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.forest.zhkz.expert.dao.ExpertDao">
+
+    <select id="queryExpertInfo" resultType="com.demo.forest.zhkz.expert.entity.ExpertInfo">
+        SELECT
+        expertId,
+        expertName,
+        expertBirthDay,
+        expertSex,
+        expertSpeciality,
+        expertPhoneNumber,
+        expertAddress,
+        expertImg,
+        expertProfession,
+        expertCompany,
+        expertEmali
+        FROM
+        zhkz_expert
+        <where>
+            <if test="expertInfo.expertName != null and expertInfo.expertName != ''">
+                AND expertName LIKE CONCAT('%',#{expertInfo.expertName},'%')
+            </if>
+            <if test="expertInfo.expertSpeciality != null and expertInfo.expertSpeciality != ''">
+                AND expertSpeciality LIKE CONCAT('%',#{expertInfo.expertSpeciality},'%')
+            </if>
+            <if test="expertInfo.expertCompany != null and expertInfo.expertCompany != ''">
+                AND expertCompany LIKE CONCAT('%',#{expertInfo.expertCompany},'%')
+            </if>
+        </where>
+    </select>
+</mapper>

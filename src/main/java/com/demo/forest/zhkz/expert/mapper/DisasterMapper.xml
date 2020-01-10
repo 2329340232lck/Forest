@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.forest.zhkz.expert.dao.DisasterDao">
+
+    <select id="queryDisasterInfo" resultType="com.demo.forest.zhkz.disaster_control.vo.EventInfoVo">
+        SELECT
+            e.eventId,
+            e.eventName,
+            DATE_FORMAT(e.eventStartTime,'%Y-%m-%d') as eventStartTime,
+            (SELECT
+                    areaName
+                FROM
+                    zhkz_area z2
+                WHERE
+                     e.areaId = z2.areaId) AS areaName,
+            (SELECT
+                    dictionariesValue
+                FROM
+                    zhkz_dictionaries
+                WHERE
+                    dictionariesKey = eventDisasterStage
+                AND dictionariesTable = 'disasterStage') eventDisasterStageName,
+            eventDisasterType,
+            eventLoss,
+            eventControlPlan,
+            eventExpertAdvice,
+            eventImg,
+            eventDiscoverer,
+            eventInfluenceArea
+        FROM
+            zhkz_event e
+        WHERE
+            e.eventDisasterStage = '3'
+    </select>
+</mapper>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.forest.zhkz.data_manage.dao.DiseaseDao">
+
+    <select id="queryDiseaseInfo" resultType="com.demo.forest.zhkz.data_manage.domain.DiseaseInfo">
+        SELECT
+        diseaseId,
+        diseaseName,
+        diseaseEtiology,
+        diseaseSymptom,
+        diseasePeriod,
+        diseaseHarm,
+        diseaseControlPlan,
+        diseaseImg
+        FROM
+        zhkz_disease
+        <where>
+            <if test="diseaseInfo.diseaseName != null and diseaseInfo.diseaseName != ''">
+                AND diseaseName LIKE CONCAT('%',#{diseaseInfo.diseaseName},'%')
+            </if>
+            <if test="diseaseInfo.diseaseSymptom != null and diseaseInfo.diseaseSymptom != ''">
+                AND diseaseSymptom LIKE CONCAT('%',#{diseaseInfo.diseaseSymptom},'%')
+            </if>
+        </where>
+        ORDER BY diseaseId DESC
+    </select>
+</mapper>

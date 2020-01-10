@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <link rel="stylesheet" href="/libs/element/theme-chalk/index.css">
+    <link rel="stylesheet" href="/css/element-custom.css">
+    <script type="text/javascript" src="/libs/vue/vue.js"></script>
+    <script type="text/javascript" src="/libs/element/index.js"></script>
+    <script type="text/javascript" src="/libs/jquery/jquery-3.4.0.min.js"></script>
+</head>
+<style>
+    body {
+        background-image: url("/img/index.jpg");
+    }
+
+    .login_form {
+        background-color: #ffffffba;
+        width: 350px;
+    }
+</style>
+<body>
+<div id="home_index">
+    <div class="login_form">
+        <el-container>
+            <el-header>
+                <h1 style="text-align: center">登录</h1>
+            </el-header>
+            <el-main>
+                <el-form ref="loginForm" :model="formData" label-width="80px">
+                    <el-form-item label="用户名">
+                        <el-input v-model="formData.userName" clearable placeholder="请输入用户名"></el-input>
+                    </el-form-item>
+                    <el-form-item label="密码">
+                        <el-input v-model="formData.userPassword" show-password clearable
+                                  placeholder="请输入密码"></el-input>
+                    </el-form-item>
+                </el-form>
+            </el-main>
+            <el-header>
+                <el-button type="success" size="medium" @click="login">登录</el-button>
+            </el-header>
+        </el-container>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="/js/login.js"></script>
+</html>
