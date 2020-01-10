@@ -6,8 +6,6 @@ import com.demo.forest.zhkz.system.domain.UserInfo;
 import com.demo.forest.zhkz.system.vo.MenuVo;
 import com.demo.forest.zhkz.system.vo.UserInfoVo;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Set;
 
@@ -16,8 +14,6 @@ public interface UserService {
     UserInfo getUserInfo(String userName);
 
     Set<String> getUserRoles(String userName);
-
-    void loginExit(UserInfo userInfo, HttpServletRequest request, HttpServletResponse response) throws Exception;
 
     IPage<UserInfoVo> queryUserInfo(Page page, UserInfo userInfo) throws Exception;
 

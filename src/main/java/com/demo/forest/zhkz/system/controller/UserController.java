@@ -50,8 +50,8 @@ public class UserController {
         return ResponseInfo.SUCCESS(info);
     }
 
-    @RequestMapping(value = "/logout.ajax", method = RequestMethod.POST)
-    public ResponseInfo loginOut() throws Exception {
+    @RequestMapping(value = "/logout.ajax")
+    public ResponseInfo loginOut() {
         Subject subject = SecurityUtils.getSubject();
         subject.logout();
         return ResponseInfo.SUCCESS();
@@ -76,7 +76,7 @@ public class UserController {
     }
 
     @RequiresRoles("超级管理员")
-    @RequestMapping(value = "/updateUserInfo.ajax", method = RequestMethod.PUT)
+    @RequestMapping(value = "/updateUserInfo.ajax", method = RequestMethod.POST)
     public ResponseInfo updateUser(UserInfo userInfo) throws Exception {
         userService.updateUser(userInfo);
         return ResponseInfo.SUCCESS();

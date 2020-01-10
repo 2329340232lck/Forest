@@ -1,6 +1,5 @@
 package com.demo.forest.config.listener;
 
-import com.demo.forest.util.SessionManager;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.annotation.WebListener;
@@ -36,6 +35,5 @@ public class SessionListener implements HttpSessionListener {
         String sessionId = session.getId();
         loginUser--;
         log.info("Session销毁，ID为 = " + sessionId + "当前在线人数:" + loginUser);
-        SessionManager.removeSession(sessionId);
     }
 }

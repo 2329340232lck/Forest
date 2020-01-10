@@ -12,9 +12,6 @@ public class HttpUtil {
 
     /**
      * 判断是否是ajax请求
-     *
-     * @param request
-     * @return
      */
     public static Boolean isAjax(HttpServletRequest request) {
         String header = request.getHeader("X-Requested-With");

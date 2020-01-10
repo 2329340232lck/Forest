@@ -18,8 +18,6 @@ public class UploadController {
 
     @RequestMapping(value = "/uploadFile.ajax")
     public ResponseInfo uploadFile(HttpServletRequest request, MultipartFile file) throws Exception {
-        ResponseInfo responseInfo = new ResponseInfo();
-        responseInfo.setResultData(uploadService.uploadFile(request, file));
-        return responseInfo;
+        return ResponseInfo.SUCCESS(uploadService.uploadFile(request, file));
     }
 }

@@ -5,33 +5,25 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.demo.forest.config.exception.custom.ExceptionEnum;
 import com.demo.forest.config.exception.custom.HTMLException;
 import com.demo.forest.config.mybatis.service.MybatisService;
-import com.demo.forest.util.SessionManager;
 import com.demo.forest.zhkz.system.dao.UserDao;
 import com.demo.forest.zhkz.system.domain.UserInfo;
 import com.demo.forest.zhkz.system.service.UserService;
 import com.demo.forest.zhkz.system.vo.MenuVo;
 import com.demo.forest.zhkz.system.vo.UserInfoVo;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Set;
 
-@Slf4j
 @Service
 public class UserServiceImpl implements UserService {
 
+    @Autowired
     private UserDao userDao;
 
+    @Autowired
     private MybatisService mybatisService;
-
-    public UserServiceImpl(UserDao userDao, MybatisService mybatisService) {
-        this.userDao = userDao;
-        this.mybatisService = mybatisService;
-    }
 
     @Override
     public UserInfo getUserInfo(String userName) {
@@ -41,17 +33,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public Set<String> getUserRoles(String userName) {
         return userDao.getUserRoles(userName);
-    }
-
-    @Override
-    public void loginExit(UserInfo userInfo, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            session.invalidate();
-            SessionManager.removeSession(session.getId());
-        } else {
-            throw new HTMLException(ExceptionEnum.USER_LOGIN_OUT_ERROR);
-        }
     }
 
     @Override
