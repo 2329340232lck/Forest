@@ -33,8 +33,10 @@ public class UserController {
     @RequestMapping(value = "/login.ajax", method = RequestMethod.POST)
     public ResponseInfo userLogin(UserInfo userInfo, HttpServletResponse response) throws Exception {
         Subject subject = SecurityUtils.getSubject();
+        UsernamePasswordToken token = new UsernamePasswordToken(userInfo.getUserName(), userInfo.getUserPassword());
+        token.setRememberMe(true);
         try {
-            subject.login(new UsernamePasswordToken(userInfo.getUserName(), userInfo.getUserPassword()));
+            subject.login(token);
             logService.insertLogInfo("用户" + userInfo.getUserName() + "登录系统!");
         } catch (IncorrectCredentialsException | UnknownAccountException e) {
             return HttpUtil.setErrorCode(response, ResponseInfo.ERROR(ExceptionEnum.USER_LOGIN_FAIL));

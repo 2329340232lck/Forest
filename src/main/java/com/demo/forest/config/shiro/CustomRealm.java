@@ -8,7 +8,6 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
@@ -16,8 +15,11 @@ import java.util.Set;
 @Component
 public class CustomRealm extends AuthorizingRealm {
 
-    @Autowired
     private UserService userService;
+
+    private CustomRealm(UserService userService) {
+        this.userService = userService;
+    }
 
     //权限验证
     @Override

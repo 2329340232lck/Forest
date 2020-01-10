@@ -1,5 +1,6 @@
 package com.demo.forest.config.shiro;
 
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -13,10 +14,6 @@ import java.util.Map;
 @Configuration
 public class SecurityConfig {
 
-    /**
-     * 安全管理器,Shiro的核心接口，相当于是一个全局的管理者
-     * 负责调用其内部各类的安全组件对用户的访问进行验证.
-     */
     @Bean(value = "securityManager")
     public SecurityManager securityManager(CustomRealm realm) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
@@ -42,10 +39,20 @@ public class SecurityConfig {
         pathMap.put("/img/**", "anon");
         pathMap.put("/js/**", "anon");
         pathMap.put("/libs/**", "anon");
+        //退出系统的过滤器
+        pathMap.put("/user/logout.ajax", "logout");
         //除此之外,过滤所有请求
         pathMap.put("/**", "authc");
         factoryBean.setFilterChainDefinitionMap(pathMap);
         return factoryBean;
+    }
+
+    @Bean
+    public HashedCredentialsMatcher hashedCredentialsMatcher() {
+        HashedCredentialsMatcher matcher = new HashedCredentialsMatcher();
+        matcher.setHashAlgorithmName("md5");
+        matcher.setHashIterations(1024);
+        return matcher;
     }
 
     /**
