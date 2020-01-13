@@ -106,6 +106,7 @@ new Vue({
                     let url = that.dialogCache.isInsert ? '/user/insertUserInfo.ajax' : '/user/updateUserInfo.ajax';
                     $.ajax({
                         url: url,
+                        type: 'POST',
                         data: that.formData,
                         success: function () {
                             that.$message({type: 'success', message: '成功'});
