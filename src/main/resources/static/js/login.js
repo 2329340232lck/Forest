@@ -13,7 +13,7 @@ new Vue({
     methods: {
         login() {
             $.ajax({
-                url: '/user/login.ajax',
+                url: '/user/login',
                 type: 'POST',
                 data: this.formData,
                 success: function (res) {
@@ -25,7 +25,7 @@ new Vue({
                     let result = xhr.responseJSON;
                     that.$message({
                         type: 'error',
-                        message: '错误码:' + result.code + ' ' + result.resultMessage,
+                        message: '错误码:' + result.code + '\n' + result.resultMessage,
                     });
                 }
             })

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/disease")
-@RequiresRoles(value = {"超级管理员", "资料管理员"}, logical = Logical.OR)
+@RequiresRoles(value = {"资料管理员"}, logical = Logical.OR)
 public class DiseaseController {
 
     @Autowired

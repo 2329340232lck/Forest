@@ -43,7 +43,7 @@ new Vue({
             that.userName = local.userName;
             //查询导航栏
             $.ajax({
-                url: '/user/queryMenuInfo.ajax',
+                url: '/user/queryMenuInfo',
                 data: {userId: local.userId},
                 success: function (res) {
                     that.dataCache.navMenu = res.resultData;
@@ -58,7 +58,7 @@ new Vue({
         click: function (url) {
             $.ajax({
                 url: url,
-                type: 'get',
+                type: 'GET',
                 success: function (res) {
                     $('#frame').html(res);
                 }
@@ -72,8 +72,8 @@ new Vue({
                 type: 'warning'
             }).then(function () {
                 $.ajax({
-                    url: '/user/logout.ajax',
-                    type: 'post',
+                    url: '/user/logout',
+                    type: 'GET',
                     success: function () {
                         localStorage.clear();
                         location.href = '/public/login.html';

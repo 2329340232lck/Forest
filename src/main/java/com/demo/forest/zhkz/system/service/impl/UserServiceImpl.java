@@ -10,19 +10,19 @@ import com.demo.forest.zhkz.system.domain.UserInfo;
 import com.demo.forest.zhkz.system.service.UserService;
 import com.demo.forest.zhkz.system.vo.MenuVo;
 import com.demo.forest.zhkz.system.vo.UserInfoVo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
+    @Resource
     private UserDao userDao;
 
-    @Autowired
+    @Resource
     private MybatisService mybatisService;
 
     @Override

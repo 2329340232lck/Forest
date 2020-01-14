@@ -1,11 +1,14 @@
 server:
   port: 8081
 
+#   mybatis-plus配置
 mybatis-plus:
+  #  mapper文件路径
   mapper-locations: classpath:/com/demo/forest/**/mapper/*.xml
   configuration:
     map-underscore-to-camel-case: true
 
+#   数据源配置
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -13,7 +16,11 @@ spring:
     username: root
     password: root
 
+#   系统配置
 forest:
+  #  拦截资源路径
   resource-paths: ["/**"]
-  exclude-paths: ["/css/**","/js/**","/img/**","/**/*.html","/libs/**","/user/login.ajax"]
-  permission: true
+  #  排除资源路径
+  exclude-paths: ["/css/**","/js/**","/img/**","/login.html","/libs/**","/user/login"]
+  #  是否开启访问控制
+  access-control: true

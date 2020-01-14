@@ -1,6 +1,5 @@
-package com.demo.forest.config.shiro;
+package com.demo.forest.config.web;
 
-import com.demo.forest.config.mybatis.service.MybatisService;
 import com.demo.forest.zhkz.system.domain.UserInfo;
 import com.demo.forest.zhkz.system.service.UserService;
 import org.apache.shiro.authc.*;
@@ -19,11 +18,9 @@ public class CustomRealm extends AuthorizingRealm {
 
     private UserService userService;
 
-    private MybatisService mybatisService;
 
-    private CustomRealm(UserService userService, MybatisService mybatisService) {
+    private CustomRealm(UserService userService) {
         this.userService = userService;
-        this.mybatisService = mybatisService;
     }
 
     //权限验证

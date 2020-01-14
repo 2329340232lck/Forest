@@ -11,26 +11,22 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping(value = "/user")
 public class UserController {
 
+    @Resource
     private UserService userService;
 
+    @Resource
     private LogService logService;
 
-    public UserController(UserService userService, LogService logService) {
-        this.userService = userService;
-        this.logService = logService;
-    }
-
-    @RequestMapping(value = "/login.ajax", method = RequestMethod.POST)
+    @PostMapping(value = "/login")
     public ResponseInfo userLogin(UserInfo userInfo, HttpServletResponse response) throws Exception {
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(userInfo.getUserName(), userInfo.getUserPassword());
@@ -50,40 +46,40 @@ public class UserController {
         return ResponseInfo.SUCCESS(info);
     }
 
-    @RequestMapping(value = "/logout.ajax")
+    @GetMapping(value = "/logout")
     public ResponseInfo loginOut() {
         Subject subject = SecurityUtils.getSubject();
         subject.logout();
         return ResponseInfo.SUCCESS();
     }
 
-    @RequestMapping(value = "/queryMenuInfo.ajax", method = RequestMethod.GET)
+    @GetMapping(value = "/queryMenuInfo")
     public ResponseInfo queryMenuInfo(UserInfo userInfo) throws Exception {
         return ResponseInfo.SUCCESS(userService.queryMenuInfo(userInfo));
     }
 
     @RequiresRoles("超级管理员")
-    @RequestMapping(value = "/queryUserInfo.ajax", method = RequestMethod.GET)
+    @GetMapping(value = "/userInfo")
     public ResponseInfo queryUserInfo(Page page, UserInfo userInfo) throws Exception {
         return ResponseInfo.SUCCESS(userService.queryUserInfo(page, userInfo));
     }
 
     @RequiresRoles("超级管理员")
-    @RequestMapping(value = "/insertUserInfo.ajax", method = RequestMethod.POST)
+    @PostMapping(value = "/userInfo")
     public ResponseInfo insertUser(UserInfo userInfo) throws Exception {
         userService.insertUser(userInfo);
         return ResponseInfo.SUCCESS();
     }
 
     @RequiresRoles("超级管理员")
-    @RequestMapping(value = "/updateUserInfo.ajax", method = RequestMethod.POST)
+    @PutMapping(value = "/userInfo")
     public ResponseInfo updateUser(UserInfo userInfo) throws Exception {
         userService.updateUser(userInfo);
         return ResponseInfo.SUCCESS();
     }
 
     @RequiresRoles("超级管理员")
-    @RequestMapping(value = "/deleteUserInfo.ajax", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/userInfo")
     public ResponseInfo deleteUser(UserInfo userInfo) throws Exception {
         userService.deleteUser(userInfo);
         return ResponseInfo.SUCCESS();

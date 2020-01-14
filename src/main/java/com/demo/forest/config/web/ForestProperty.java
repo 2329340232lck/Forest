@@ -17,7 +17,7 @@ public class ForestProperty {
     /**
      * 权限过滤是否开启
      */
-    private Boolean permission = Boolean.FALSE;
+    private Boolean accessControl = Boolean.FALSE;
 
     public String[] getExcludePaths() {
         return excludePaths;
@@ -35,11 +35,11 @@ public class ForestProperty {
         this.resourcePaths = resourcePaths;
     }
 
-    public Boolean getPermission() {
-        return permission;
+    public Boolean getAccessControl() {
+        return accessControl;
     }
 
-    public void setPermission(Boolean permission) {
-        this.permission = permission;
+    public void setAccessControl(Boolean accessControl) {
+        this.accessControl = accessControl;
     }
 }

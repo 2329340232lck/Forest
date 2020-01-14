@@ -34,7 +34,7 @@ public class UnifiedExceptionHandler {
         } else if (e instanceof AuthorizationException) {
             responseInfo = HttpUtil.setErrorCode(response, ResponseInfo.ERROR(605, e.getMessage()));
         } else {
-            responseInfo = HttpUtil.setErrorCode(response, ResponseInfo.ERROR());
+            responseInfo = HttpUtil.setErrorCode(response, ResponseInfo.ERROR(e.getMessage()));
         }
         ModelAndView modelAndView = new ModelAndView();
         //判断是否为AJAX请求

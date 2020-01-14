@@ -73,7 +73,7 @@ new Vue({
         //初始化表格
         initTable: function () {
             $.ajax({
-                url: '/user/queryUserInfo.ajax',
+                url: '/user/userInfo',
                 data: that.dataQuery,
                 success: function (res) {
                     let data = res.resultData;
@@ -103,10 +103,10 @@ new Vue({
         submitForm: function (form) {
             that.$refs[form].validate((valid) => {
                 if (valid) {
-                    let url = that.dialogCache.isInsert ? '/user/insertUserInfo.ajax' : '/user/updateUserInfo.ajax';
+                    let requestMethod = that.dialogCache.isInsert ? 'POST' : 'PUT';
                     $.ajax({
-                        url: url,
-                        type: 'POST',
+                        url: '/user/userInfo',
+                        type: requestMethod,
                         data: that.formData,
                         success: function () {
                             that.$message({type: 'success', message: '成功'});
@@ -127,7 +127,8 @@ new Vue({
                 type: 'warning'
             }).then(function () {
                 $.ajax({
-                    url: '/user/deleteUserInfo.ajax',
+                    url: '/user/userInfo',
+                    type: 'DELETE',
                     data: {userId: row.userId},
                     success: function () {
                         that.$message({message: '删除完成', type: 'success'});

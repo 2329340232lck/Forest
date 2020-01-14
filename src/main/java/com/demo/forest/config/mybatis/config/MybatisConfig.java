@@ -9,7 +9,9 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
+//开启事务管理器
 @EnableTransactionManagement
+//mapper映射扫描
 @MapperScan(basePackages = {"com.demo.forest.**.dao", "com.demo.forest.config.mybatis.mapper"})
 public class MybatisConfig {
 
