@@ -5,24 +5,22 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistration
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import java.util.Arrays;
-import java.util.List;
-
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
+    private ForestProperty forestProperty;
+
     private ForestInterceptors forestInterceptors;
 
-    private List<String> excludePaths = Arrays.asList("/login.html", "/user/login.ajax", "/css/**", "/img/**", "/js/**", "/libs/**");
-
-    public WebMvcConfig(ForestInterceptors forestInterceptors) {
+    public WebMvcConfig(ForestProperty forestProperty, ForestInterceptors forestInterceptors) {
+        this.forestProperty = forestProperty;
         this.forestInterceptors = forestInterceptors;
     }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         InterceptorRegistration registration = registry.addInterceptor(forestInterceptors);
-        registration.addPathPatterns("/**")
-                .excludePathPatterns(excludePaths);
+        registration.addPathPatterns(forestProperty.getResourcePaths())
+                .excludePathPatterns(forestProperty.getExcludePaths());
     }
 }

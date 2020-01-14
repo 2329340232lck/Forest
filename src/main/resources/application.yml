@@ -1,6 +1,11 @@
 server:
   port: 8081
 
+mybatis-plus:
+  mapper-locations: classpath:/com/demo/forest/**/mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -8,7 +13,7 @@ spring:
     username: root
     password: root
 
-mybatis-plus:
-  mapper-locations: classpath:/com/demo/forest/**/mapper/*.xml
-  configuration:
-    map-underscore-to-camel-case: true
+forest:
+  resource-paths: ["/**"]
+  exclude-paths: ["/css/**","/js/**","/img/**","/**/*.html","/libs/**","/user/login.ajax"]
+  permission: true

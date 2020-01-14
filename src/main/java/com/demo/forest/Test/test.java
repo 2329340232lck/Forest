@@ -6,13 +6,13 @@ public class test {
         test1();
         test2();
     }
-    public static void test1(){
+    private static void test1(){
         CEO instance = CEO.getInstance();
-        instance.helloword();
+        instance.helloWord();
     }
 
-    public static void test2(){
+    private static void test2(){
         CEO instance = CEO.getInstance();
-        instance.helloword();
+        instance.helloWord();
     }
 }

@@ -18,7 +18,7 @@ public class CEO {
         return ceo;
     }
 
-    public void helloword() {
+    public void helloWord() {
         i++;
         System.out.println("Hello Word" + i);
     }
