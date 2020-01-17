@@ -10,6 +10,8 @@ import com.demo.forest.zhkz.disaster_control.vo.AreaInfoVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+
 
 @Service
 public class AreaServiceImpl implements AreaService {
@@ -17,7 +19,7 @@ public class AreaServiceImpl implements AreaService {
     @Autowired
     private MybatisService mybatisService;
 
-    @Autowired
+    @Resource
     private AreaDao areaDao;
 
     @Override

@@ -9,13 +9,15 @@ import com.demo.forest.zhkz.data_manage.service.DiseaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+
 @Service
 public class DiseaseServiceImpl implements DiseaseService {
 
     @Autowired
     private MybatisService mybatisService;
 
-    @Autowired
+    @Resource
     private DiseaseDao diseaseDao;
 
     @Override

@@ -63,7 +63,7 @@ new Vue({
         //初始化表格
         initTable: function () {
             $.ajax({
-                url: '/area/queryAreaInfo.ajax',
+                url: '/area',
                 data: that.dataQuery,
                 success: function (res) {
                     let data = res.resultData;
@@ -96,9 +96,10 @@ new Vue({
         submitForm: function (form) {
             that.$refs[form].validate((valid) => {
                 if (valid) {
-                    let url = that.dialogCache.isInsert ? '/area/insertAreaInfo.ajax' : '/area/updateAreaInfo.ajax';
+                    let type = that.dialogCache.isInsert ? 'POST' : 'PUT';
                     $.ajax({
-                        url: url,
+                        url: '/area',
+                        type: type,
                         data: that.formData,
                         success: function () {
                             that.$message({type: 'success', message: '成功'});
@@ -119,7 +120,8 @@ new Vue({
                 type: 'warning'
             }).then(function () {
                 $.ajax({
-                    url: '/area/deleteAreaInfo.ajax',
+                    url: '/area',
+                    type: 'DELETE',
                     data: {areaId: row.areaId},
                     success: function () {
                         that.$message({message: '删除完成', type: 'success'});

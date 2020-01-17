@@ -99,7 +99,7 @@ new Vue({
         //初始化表格
         initTable: function () {
             $.ajax({
-                url: '/disaster/queryDisasterInfo.ajax',
+                url: '/disaster',
                 data: that.dataQuery,
                 success: function (res) {
                     let data = res.resultData;
@@ -118,9 +118,10 @@ new Vue({
         submitForm: function (form) {
             that.$refs[form].validate((valid) => {
                 if (valid) {
-                    let url = that.dialogCache.isInsert ? '/event/insertEventInfo.ajax' : '/event/updateEventInfo.ajax';
+                    let type = that.dialogCache.isInsert ? 'POST' : 'PUT';
                     $.ajax({
-                        url: url,
+                        url: '/event',
+                        type: type,
                         data: that.formData,
                         success: function () {
                             that.$message({type: 'success', message: '成功'});

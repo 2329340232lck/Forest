@@ -68,7 +68,8 @@ new Vue({
         //初始化表格
         initTable: function () {
             $.ajax({
-                url: '/disease/queryDiseaseInfo.ajax',
+                url: '/disease',
+                type: 'GET',
                 data: that.dataQuery,
                 success: function (res) {
                     let data = res.resultData;
@@ -100,9 +101,10 @@ new Vue({
         submitForm: function (form) {
             that.$refs[form].validate((valid) => {
                 if (valid) {
-                    let url = that.dialogCache.isInsert ? '/disease/insertDiseaseInfo.ajax' : '/disease/updateDiseaseInfo.ajax';
+                    let type = that.dialogCache.isInsert ? 'POST' : 'PUT';
                     $.ajax({
-                        url: url,
+                        url: '/disease',
+                        type: type,
                         data: that.formData,
                         success: function () {
                             that.$message({type: 'success', message: '成功'});
@@ -123,7 +125,8 @@ new Vue({
                 type: 'warning'
             }).then(function () {
                 $.ajax({
-                    url: '/disease/deleteDiseaseInfo.ajax',
+                    url: '/disease',
+                    type: 'DELETE',
                     data: {diseaseId: row.diseaseId},
                     success: function () {
                         that.$message({message: '删除完成', type: 'success'});

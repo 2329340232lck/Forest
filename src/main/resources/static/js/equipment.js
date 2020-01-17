@@ -71,7 +71,7 @@ new Vue({
         //初始化表格
         initTable: function () {
             $.ajax({
-                url: '/equipment/queryEquipmentInfo.ajax',
+                url: '/equipment',
                 data: that.dataQuery,
                 success: function (res) {
                     let data = res.resultData;
@@ -90,10 +90,10 @@ new Vue({
         submitForm: function (form) {
             that.$refs[form].validate((valid) => {
                 if (valid) {
-                    let url = that.dialogCache.isInsert ? '/equipment/insertEquipmentInfo.ajax'
-                        : '/equipment/updateEquipmentInfo.ajax';
+                    let type = that.dialogCache.isInsert ? 'POST' : 'PUT';
                     $.ajax({
-                        url: url,
+                        url: '/equipment',
+                        type: type,
                         data: that.formData,
                         success: function () {
                             that.$message({type: 'success', message: '成功'});
@@ -128,7 +128,8 @@ new Vue({
                 type: 'warning'
             }).then(function () {
                 $.ajax({
-                    url: '/equipment/deleteEquipmentInfo.ajax',
+                    url: '/equipment',
+                    type: 'DELETE',
                     data: {resourceId: row.resourceId},
                     success: function () {
                         that.$message({message: '删除完成', type: 'success'});
@@ -141,7 +142,6 @@ new Vue({
         },
         //编辑
         editInfo: function (row) {
-            // console.log(row);
             that.dialogCache = {
                 title: '编辑',
                 visible: true,

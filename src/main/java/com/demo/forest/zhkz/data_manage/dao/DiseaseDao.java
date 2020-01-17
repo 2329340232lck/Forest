@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.SQLException;
 
-@Repository
 public interface DiseaseDao {
 
     IPage<DiseaseInfo> queryDiseaseInfo(@Param("page") Page page, @Param("diseaseInfo") DiseaseInfo diseaseInfo) throws SQLException;

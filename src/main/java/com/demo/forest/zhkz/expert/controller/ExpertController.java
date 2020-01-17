@@ -7,35 +7,33 @@ import com.demo.forest.zhkz.expert.service.ExpertService;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/expert")
 @RequiresRoles(value = {"超级管理员","专家管理员"},logical = Logical.OR)
 public class ExpertController {
 
     @Autowired
     private ExpertService expertService;
 
-    @RequestMapping(value = "/queryExpertInfo.ajax")
+    @GetMapping(value = "/expert")
     public ResponseInfo queryExpertInfo(Page page, ExpertInfo expertInfo) throws Exception {
         return ResponseInfo.SUCCESS(expertService.queryExpertInfo(page, expertInfo));
     }
 
-    @RequestMapping(value = "/insertExpertInfo.ajax")
+    @PostMapping(value = "/expert")
     public ResponseInfo insertExpertInfo(ExpertInfo expertInfo) throws Exception {
         expertService.insertExpertInfo(expertInfo);
         return ResponseInfo.SUCCESS();
     }
 
-    @RequestMapping(value = "/updateExpertInfo.ajax")
+    @PutMapping(value = "/expert")
     public ResponseInfo updateExpertInfo(ExpertInfo expertInfo) throws Exception {
         expertService.updateExpertInfo(expertInfo);
         return ResponseInfo.SUCCESS();
     }
 
-    @RequestMapping(value = "/deleteExpertInfo.ajax")
+    @DeleteMapping(value = "/expert")
     public ResponseInfo deleteExpertInfo(ExpertInfo expertInfo) throws Exception {
         expertService.deleteExpertInfo(expertInfo);
         return ResponseInfo.SUCCESS();

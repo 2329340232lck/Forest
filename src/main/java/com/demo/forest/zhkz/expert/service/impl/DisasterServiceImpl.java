@@ -6,13 +6,14 @@ import com.demo.forest.zhkz.disaster_control.entity.EventInfo;
 import com.demo.forest.zhkz.disaster_control.vo.EventInfoVo;
 import com.demo.forest.zhkz.expert.dao.DisasterDao;
 import com.demo.forest.zhkz.expert.service.DisasterService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 @Service
 public class DisasterServiceImpl implements DisasterService {
 
-    @Autowired
+    @Resource
     private DisasterDao disasterDao;
 
     @Override

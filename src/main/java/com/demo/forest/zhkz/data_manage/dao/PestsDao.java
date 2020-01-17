@@ -6,7 +6,6 @@ import com.demo.forest.zhkz.data_manage.domain.PestsInfo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
-@Repository
 public interface PestsDao {
 
     IPage<PestsInfo> queryPestsInfo(@Param("page") Page page, @Param("pestsInfo") PestsInfo pestsInfo);

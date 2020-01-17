@@ -7,35 +7,33 @@ import com.demo.forest.zhkz.data_manage.service.PestsService;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/pests")
 @RequiresRoles(value = {"超级管理员", "资料管理员"}, logical = Logical.OR)
 public class PestsController {
 
     @Autowired
     private PestsService pestsService;
 
-    @RequestMapping(value = "/queryPestsInfo.ajax")
+    @GetMapping(value = "/pests")
     public ResponseInfo queryPestsInfo(Page page, PestsInfo pestsInfo) throws Exception {
         return ResponseInfo.SUCCESS(pestsService.queryPestsInfo(page, pestsInfo));
     }
 
-    @RequestMapping(value = "/insertPestsInfo.ajax")
+    @PostMapping(value = "/pests")
     public ResponseInfo insertPestsInfo(PestsInfo pestsInfo) throws Exception {
         pestsService.insertPestsInfo(pestsInfo);
         return ResponseInfo.SUCCESS();
     }
 
-    @RequestMapping(value = "/updatePestsInfo.ajax")
+    @PutMapping(value = "/pests")
     public ResponseInfo updatePestsInfo(PestsInfo pestsInfo) throws Exception {
         pestsService.updatePestsInfo(pestsInfo);
         return ResponseInfo.SUCCESS();
     }
 
-    @RequestMapping(value = "/deletePestsInfo.ajax")
+    @DeleteMapping(value = "/pests")
     public ResponseInfo deletePestsInfo(PestsInfo pestsInfo) throws Exception {
         pestsService.deletePestsInfo(pestsInfo);
         return ResponseInfo.SUCCESS();

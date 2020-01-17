@@ -82,7 +82,7 @@
     </div>
     <el-dialog :visible.sync="dialogCache.visible" :title="dialogCache.title" @close="resetForm('form')"
                :close-on-click-modal="false" center>
-        <el-form :model="formData" ref="form" label-width="90px" :rules="submitRules">
+        <el-form :model="formData" size="medium" ref="form" label-width="90px" :rules="submitRules">
             <el-row>
                 <el-col :span="12">
                     <el-form-item label="病害名称" prop="diseaseName">

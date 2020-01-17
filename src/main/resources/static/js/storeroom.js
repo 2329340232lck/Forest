@@ -70,16 +70,14 @@ new Vue({
         //初始化数据;
         initDataCache: function () {
             $.ajax({
-                url: '/grade/queryGradeInfo.ajax',
+                url: '/grade',
                 success: function (res) {
-                    // debugger;
                     that.dataCache.gradeCache = res.resultData.records;
                 }
             });
             $.ajax({
-                url: '/equipment/queryEquipmentInfo.ajax',
+                url: '/equipment',
                 success: function (res) {
-                    // debugger;
                     that.dataCache.resourceCache = res.resultData.records;
                 }
             });
@@ -87,7 +85,7 @@ new Vue({
         //初始化表格
         initTable: function () {
             $.ajax({
-                url: '/storeroom/queryStoreroomInfo.ajax',
+                url: '/storeroom',
                 data: that.dataQuery,
                 success: function (res) {
                     let data = res.resultData;
@@ -106,8 +104,7 @@ new Vue({
         submitForm: function (form) {
             that.$refs[form].validate((valid) => {
                 if (valid) {
-                    let url = that.dialogCache.isInsert ? '/storeroom/insertStoreroomInfo.ajax'
-                        : '/storeroom/updateStoreroomInfo.ajax';
+                    let type = that.dialogCache.isInsert ? 'POST' : 'PUT';
                     if (that.formData.resources.length == 0) {
                         this.$message({
                             message: '请至少添加一条出库记录！',
@@ -116,7 +113,8 @@ new Vue({
                         return;
                     }
                     $.ajax({
-                        url: url,
+                        url: '/storeroom',
+                        type: type,
                         //注意，ajax发送json数据需要设置contentType为application/json
                         contentType: 'application/json;charset=UTF-8',
                         data: JSON.stringify(that.formData),
@@ -165,7 +163,7 @@ new Vue({
             that.dataCache.userName = row.userName;
             that.loading2 = true;
             $.ajax({
-                url: '/storeroom/getResources.ajax',
+                url: '/storeroom/getResources',
                 data: {key: row.storeroomId},
                 success: function (res) {
                     that.loading2 = false;
@@ -186,7 +184,8 @@ new Vue({
                 type: 'warning'
             }).then(function () {
                 $.ajax({
-                    url: '/storeroom/deleteStoreroomInfo.ajax',
+                    url: '/storeroom',
+                    type: 'DELETE',
                     data: {storeroomId: row.storeroomId},
                     success: function () {
                         that.$message({message: '删除完成', type: 'success'});

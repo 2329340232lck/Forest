@@ -9,6 +9,8 @@ import com.demo.forest.zhkz.data_manage.service.MouseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+
 
 @Service
 public class MouseServiceImpl implements MouseService {
@@ -16,7 +18,7 @@ public class MouseServiceImpl implements MouseService {
     @Autowired
     private MybatisService mybatisService;
 
-    @Autowired
+    @Resource
     private MouseDao mouseDao;
 
     @Override

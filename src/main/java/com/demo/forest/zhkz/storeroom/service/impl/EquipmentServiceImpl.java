@@ -10,13 +10,15 @@ import com.demo.forest.zhkz.storeroom.vo.EquipmentInfoVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+
 @Service
 public class EquipmentServiceImpl implements EquipmentService {
 
     @Autowired
     private MybatisService mybatisService;
 
-    @Autowired
+    @Resource
     private EquipmentDao equipmentDao;
 
     @Override

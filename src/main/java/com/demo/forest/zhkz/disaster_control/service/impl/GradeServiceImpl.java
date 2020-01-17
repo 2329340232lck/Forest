@@ -12,6 +12,8 @@ import com.demo.forest.zhkz.disaster_control.vo.GradeInfoVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+
 
 @Service
 public class GradeServiceImpl implements GradeService {
@@ -19,7 +21,7 @@ public class GradeServiceImpl implements GradeService {
     @Autowired
     private MybatisService mybatisService;
 
-    @Autowired
+    @Resource
     private GradeDao gradeDao;
 
     @Override

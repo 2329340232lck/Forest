@@ -9,10 +9,12 @@ import com.demo.forest.zhkz.data_manage.service.PestsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+
 @Service
 public class PestsServiceImpl implements PestsService {
 
-    @Autowired
+    @Resource
     private PestsDao pestsDao;
 
     @Autowired
@@ -20,8 +22,7 @@ public class PestsServiceImpl implements PestsService {
 
     @Override
     public IPage<PestsInfo> queryPestsInfo(Page page, PestsInfo pestsInfo) throws Exception {
-        IPage<PestsInfo> pestsInfoIPage = pestsDao.queryPestsInfo(page, pestsInfo);
-        return pestsInfoIPage;
+        return pestsDao.queryPestsInfo(page, pestsInfo);
     }
 
     @Override

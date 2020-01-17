@@ -54,10 +54,9 @@ new Vue({
         //初始化数据;
         initDataCache: function () {
             $.ajax({
-                url: '/area/queryAreaInfo.ajax',
+                url: '/area',
+                type: 'GET',
                 success: function (res) {
-                    // debugger;
-                    // console.log(res.resultData.records);
                     that.dataCache.areaName = res.resultData.records;
                 }
             })
@@ -65,7 +64,7 @@ new Vue({
         //初始化表格
         initTable: function () {
             $.ajax({
-                url: '/grade/queryGradeInfo.ajax',
+                url: '/grade',
                 data: that.dataQuery,
                 success: function (res) {
                     let data = res.resultData;
@@ -99,9 +98,10 @@ new Vue({
         submitForm: function (form) {
             that.$refs[form].validate((valid) => {
                 if (valid) {
-                    let url = that.dialogCache.isInsert ? '/grade/insertGradeInfo.ajax' : '/grade/updateGradeInfo.ajax';
+                    let type = that.dialogCache.isInsert ? 'POST' : 'PUT';
                     $.ajax({
-                        url: url,
+                        url: '/grade',
+                        type: type,
                         data: that.formData,
                         success: function () {
                             that.$message({type: 'success', message: '成功'});
@@ -122,7 +122,8 @@ new Vue({
                 type: 'warning'
             }).then(function () {
                 $.ajax({
-                    url: '/grade/deleteGradeInfo.ajax',
+                    url: '/grade',
+                    type: 'DELETE',
                     data: {gradeId: row.gradeId},
                     success: function () {
                         that.$message({message: '删除完成', type: 'success'});
@@ -135,7 +136,6 @@ new Vue({
         },
         //编辑
         editInfo: function (row) {
-            console.log(row);
             that.dialogCache = {
                 title: '编辑',
                 visible: true,

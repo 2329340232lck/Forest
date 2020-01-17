@@ -9,13 +9,15 @@ import com.demo.forest.zhkz.expert.service.ExpertService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+
 @Service
 public class ExpertServiceImpl implements ExpertService {
 
     @Autowired
     private MybatisService mybatisService;
 
-    @Autowired
+    @Resource
     private ExpertDao expertDao;
 
     @Override

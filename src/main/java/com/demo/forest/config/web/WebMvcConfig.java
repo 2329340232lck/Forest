@@ -8,8 +8,6 @@ import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.LinkedHashMap;
@@ -27,12 +25,12 @@ public class WebMvcConfig implements WebMvcConfigurer {
         this.forestInterceptors = forestInterceptors;
     }
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        InterceptorRegistration registration = registry.addInterceptor(forestInterceptors);
-        registration.addPathPatterns(forestProperty.getResourcePaths())
-                .excludePathPatterns(forestProperty.getExcludePaths());
-    }
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        InterceptorRegistration registration = registry.addInterceptor(forestInterceptors);
+//        registration.addPathPatterns(forestProperty.getResourcePaths())
+//                .excludePathPatterns(forestProperty.getExcludePaths());
+//    }
 
     //====================================以下为Shiro配置==============================================
 

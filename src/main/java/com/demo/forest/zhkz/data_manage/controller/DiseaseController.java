@@ -7,35 +7,33 @@ import com.demo.forest.zhkz.data_manage.service.DiseaseService;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/disease")
-@RequiresRoles(value = {"资料管理员"}, logical = Logical.OR)
+@RequiresRoles(value = {"资料管理员","超级管理员"}, logical = Logical.OR)
 public class DiseaseController {
 
     @Autowired
     private DiseaseService diseaseService;
 
-    @RequestMapping(value = "/queryDiseaseInfo.ajax")
+    @GetMapping(value = "/disease")
     public ResponseInfo queryDiseaseInfo(Page page, DiseaseInfo diseaseInfo) throws Exception {
         return ResponseInfo.SUCCESS(diseaseService.queryDiseaseInfo(page, diseaseInfo));
     }
 
-    @RequestMapping(value = "/insertDiseaseInfo.ajax")
+    @PostMapping(value = "/disease")
     public ResponseInfo insertDiseaseInfo(DiseaseInfo diseaseInfo) throws Exception {
         diseaseService.insertDiseaseInfo(diseaseInfo);
         return ResponseInfo.SUCCESS();
     }
 
-    @RequestMapping(value = "/updateDiseaseInfo.ajax")
+    @PutMapping(value = "/disease")
     public ResponseInfo updateDiseaseInfo(DiseaseInfo diseaseInfo) throws Exception {
         diseaseService.updateDiseaseInfo(diseaseInfo);
         return ResponseInfo.SUCCESS();
     }
 
-    @RequestMapping(value = "/deleteDiseaseInfo.ajax")
+    @DeleteMapping(value = "/disease")
     public ResponseInfo deleteDiseaseInfo(DiseaseInfo diseaseInfo) throws Exception {
         diseaseService.deleteDiseaseInfo(diseaseInfo);
         return ResponseInfo.SUCCESS();
