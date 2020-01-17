@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
     private MybatisService mybatisService;
 
     @Override
-    public UserInfo getUserInfo(String userName) {
+    public UserInfo getUserInfo(String userName){
         return userDao.getUserInfo(userName);
     }
 
@@ -37,6 +37,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public IPage<UserInfoVo> queryUserInfo(Page page, UserInfo userInfo) throws Exception {
+        IPage<Object> objectIPage = mybatisService.selectPage(page, userInfo);
         return userDao.queryUserInfo(page, userInfo);
     }
 

@@ -11,8 +11,8 @@ public enum ExceptionEnum {
     TOO_MANY_ATTEMPTS(604, "警告,用户登录错误次数过多!"),
     DUPLICATE_USER_NAME(610, "错误,重复的用户"),
     // --------------------------Grade错误枚举-------------------------------------
-    GRADE_REPEAT_INSERT(1001, "添加失败，小班名称冲突!");
-
+    GRADE_REPEAT_INSERT(1001, "添加失败，小班名称冲突!"),
+    GRADE_REPEAT_UPDATE(1002,"s");
     private int code;
 
     private String errorMessage;

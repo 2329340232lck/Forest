@@ -73,7 +73,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    //条件注解,根据属性配置指定来加载这个Bean
     @ConditionalOnProperty(prefix = "forest", name = "access-control", havingValue = "true")
     public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager) {
         System.out.println("=======================开启Shiro访问权限控制!=======================");

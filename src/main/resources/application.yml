@@ -18,9 +18,9 @@ spring:
 
 #   系统配置
 forest:
-  #  拦截资源路径
+  #  配置被Shiro拦截的资源路径
   resource-paths: ["/**"]
-  #  排除资源路径
+  #  配置放行的资源路径
   exclude-paths: ["/css/**","/js/**","/img/**","/login.html","/libs/**","/user/login"]
   #  是否开启访问控制
   access-control: true
