@@ -10,6 +10,8 @@ import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import static com.demo.forest.util.ResponseInfo.SUCCESS;
+
 @RestController
 @RequiresRoles(value = {"超级管理员","灾情管理员"},logical = Logical.OR)
 public class AreaController {
@@ -19,24 +21,24 @@ public class AreaController {
 
     @GetMapping(value = "/area")
     public ResponseInfo queryAreaInfo(Page page, AreaInfoVo areaInfo) throws Exception {
-        return ResponseInfo.SUCCESS(areaService.queryAreaInfo(page, areaInfo));
+        return SUCCESS(areaService.queryAreaInfo(page, areaInfo));
     }
 
     @PostMapping(value = "/area")
     public ResponseInfo insertAreaInfo(AreaInfo areaInfo) throws Exception {
         areaService.insertAreaInfo(areaInfo);
-        return ResponseInfo.SUCCESS();
+        return SUCCESS();
     }
 
     @PutMapping(value = "/area")
     public ResponseInfo updateAreaInfo(AreaInfo areaInfo) throws Exception {
         areaService.updateAreaInfo(areaInfo);
-        return ResponseInfo.SUCCESS();
+        return SUCCESS();
     }
 
     @DeleteMapping(value = "/area")
     public ResponseInfo deleteAreaInfo(AreaInfo areaInfo) throws Exception {
         areaService.deleteAreaInfo(areaInfo);
-        return ResponseInfo.SUCCESS();
+        return SUCCESS();
     }
 }

@@ -9,6 +9,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 
+import static com.demo.forest.util.ResponseInfo.SUCCESS;
+
 @RestController
 @RequestMapping("/upload")
 public class UploadController {
@@ -18,6 +20,6 @@ public class UploadController {
 
     @RequestMapping(value = "/uploadFile.ajax")
     public ResponseInfo uploadFile(HttpServletRequest request, MultipartFile file) throws Exception {
-        return ResponseInfo.SUCCESS(uploadService.uploadFile(request, file));
+        return SUCCESS(uploadService.uploadFile(request, file));
     }
 }

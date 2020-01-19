@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 
+import static com.demo.forest.util.HttpUtil.setErrorCode;
+import static com.demo.forest.util.ResponseInfo.ERROR;
+
 /**
  * 全局异常统一处理器
  */
@@ -23,18 +26,18 @@ public class UnifiedExceptionHandler {
     public ModelAndView exceptionHandler(Exception e, HttpServletRequest request, HttpServletResponse response) {
         ResponseInfo responseInfo;
         //错误类型判断.....
-        e.printStackTrace();
         if (e instanceof HTMLException) {
             HTMLException he = (HTMLException) e;
-            responseInfo = HttpUtil.setErrorCode(response, ResponseInfo.ERROR(he.getErrorCode(), he.getErrorMessage()));
+            responseInfo = setErrorCode(response, ERROR(he.getErrorCode(), he.getErrorMessage()));
         } else if (e instanceof NullPointerException) {
-            responseInfo = HttpUtil.setErrorCode(response, ResponseInfo.ERROR(e.getMessage()));
+            responseInfo = setErrorCode(response, ERROR(e.getMessage()));
         } else if (e instanceof SQLException) {
-            responseInfo = HttpUtil.setErrorCode(response, ResponseInfo.ERROR(e.getMessage()));
+            responseInfo = setErrorCode(response, ERROR(e.getMessage()));
         } else if (e instanceof AuthorizationException) {
-            responseInfo = HttpUtil.setErrorCode(response, ResponseInfo.ERROR(605, e.getMessage()));
+            responseInfo = setErrorCode(response, ERROR(605, e.getMessage()));
         } else {
-            responseInfo = HttpUtil.setErrorCode(response, ResponseInfo.ERROR(e.getMessage()));
+            responseInfo = setErrorCode(response, ERROR(e.getMessage()));
+            e.printStackTrace();
         }
         ModelAndView modelAndView = new ModelAndView();
         //判断是否为AJAX请求

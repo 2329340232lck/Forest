@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.demo.forest.util.ResponseInfo.SUCCESS;
+
 @RestController
 @RequestMapping("/dictionaries")
 public class DictionariesController {
@@ -16,7 +18,7 @@ public class DictionariesController {
 
     @RequestMapping("/queryDictionInfoByKey.ajax")
     public ResponseInfo queryDictionInfoByKey(DictionariesInfo dictionariesInfo) throws Exception {
-        return ResponseInfo.SUCCESS(dictionariesService.queryDictionInfoByKey(dictionariesInfo));
+        return SUCCESS(dictionariesService.queryDictionInfoByKey(dictionariesInfo));
     }
 
 }

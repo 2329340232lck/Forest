@@ -10,6 +10,8 @@ import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import static com.demo.forest.util.ResponseInfo.SUCCESS;
+
 @RestController
 @RequiresRoles(value = {"超级管理员", "灾情管理员"}, logical = Logical.OR)
 public class GradeController {
@@ -19,24 +21,24 @@ public class GradeController {
 
     @GetMapping(value = "/grade")
     public ResponseInfo queryGradeInfo(Page page, GradeInfoVo gradeInfo) throws Exception {
-        return ResponseInfo.SUCCESS(gradeService.queryGradeInfo(page, gradeInfo));
+        return SUCCESS(gradeService.queryGradeInfo(page, gradeInfo));
     }
 
     @PostMapping(value = "/grade")
     public ResponseInfo insertGradeInfo(GradeInfo gradeInfo) throws Exception {
         gradeService.insertGradeInfo(gradeInfo);
-        return ResponseInfo.SUCCESS();
+        return SUCCESS();
     }
 
     @PutMapping(value = "/grade")
     public ResponseInfo updateGradeInfo(GradeInfo gradeInfo) throws Exception {
         gradeService.updateGradeInfo(gradeInfo);
-        return ResponseInfo.SUCCESS();
+        return SUCCESS();
     }
 
     @DeleteMapping(value = "/grade")
     public ResponseInfo deleteGradeInfo(GradeInfo gradeInfo) throws Exception {
         gradeService.deleteGradeInfo(gradeInfo);
-        return ResponseInfo.SUCCESS();
+        return SUCCESS();
     }
 }

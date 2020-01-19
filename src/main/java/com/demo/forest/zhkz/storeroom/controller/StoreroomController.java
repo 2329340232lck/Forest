@@ -10,6 +10,8 @@ import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import static com.demo.forest.util.ResponseInfo.SUCCESS;
+
 @RestController
 @RequiresRoles(value = {"超级管理员", "库房管理员"}, logical = Logical.OR)
 public class StoreroomController {
@@ -19,29 +21,29 @@ public class StoreroomController {
 
     @GetMapping(value = "/storeroom")
     public ResponseInfo queryStoreroomInfo(Page page, StoreroomInfoVo storeroomInfoVo) throws Exception {
-        return ResponseInfo.SUCCESS(storeroomService.queryStoreroomInfo(page, storeroomInfoVo));
+        return SUCCESS(storeroomService.queryStoreroomInfo(page, storeroomInfoVo));
     }
 
     @GetMapping(value = "/storeroom/getResources")
     public ResponseInfo getResources(String key) throws Exception {
-        return ResponseInfo.SUCCESS(storeroomService.getResources(key));
+        return SUCCESS(storeroomService.getResources(key));
     }
 
     @PostMapping(value = "/storeroom")
     public ResponseInfo insertStoreroomInfo(@RequestBody StoreroomInfoVo storeroomInfoVo) throws Exception {
         storeroomService.insertStoreroomInfo(storeroomInfoVo);
-        return ResponseInfo.SUCCESS();
+        return SUCCESS();
     }
 
     @PutMapping(value = "/storeroom")
     public ResponseInfo updateStoreroomInfo(@RequestBody StoreroomInfoVo storeroomInfo) throws Exception {
         storeroomService.updateStoreroomInfo(storeroomInfo);
-        return ResponseInfo.SUCCESS();
+        return SUCCESS();
     }
 
     @DeleteMapping(value = "/storeroom")
     public ResponseInfo deleteStoreroomInfo(StoreroomInfo storeroomInfo) throws Exception {
         storeroomService.deleteStoreroomInfo(storeroomInfo);
-        return ResponseInfo.SUCCESS();
+        return SUCCESS();
     }
 }

@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
+import static com.demo.forest.util.ResponseInfo.SUCCESS;
+
 @RestController
 @RequestMapping(value = "/user")
 public class UserController {
@@ -43,45 +45,45 @@ public class UserController {
         }
         UserInfo info = userService.getUserInfo(userInfo.getUserName());
         info.setUserPassword(null);
-        return ResponseInfo.SUCCESS(info);
+        return SUCCESS(info);
     }
 
     @GetMapping(value = "/logout")
     public ResponseInfo loginOut() {
         Subject subject = SecurityUtils.getSubject();
         subject.logout();
-        return ResponseInfo.SUCCESS();
+        return SUCCESS();
     }
 
     @GetMapping(value = "/queryMenuInfo")
     public ResponseInfo queryMenuInfo(UserInfo userInfo) throws Exception {
-        return ResponseInfo.SUCCESS(userService.queryMenuInfo(userInfo));
+        return SUCCESS(userService.queryMenuInfo(userInfo));
     }
 
     @RequiresRoles("超级管理员")
     @GetMapping(value = "/userInfo")
     public ResponseInfo queryUserInfo(Page page, UserInfo userInfo) throws Exception {
-        return ResponseInfo.SUCCESS(userService.queryUserInfo(page, userInfo));
+        return SUCCESS(userService.queryUserInfo(page, userInfo));
     }
 
     @RequiresRoles("超级管理员")
     @PostMapping(value = "/userInfo")
     public ResponseInfo insertUser(UserInfo userInfo) throws Exception {
         userService.insertUser(userInfo);
-        return ResponseInfo.SUCCESS();
+        return SUCCESS();
     }
 
     @RequiresRoles("超级管理员")
     @PutMapping(value = "/userInfo")
     public ResponseInfo updateUser(UserInfo userInfo) throws Exception {
         userService.updateUser(userInfo);
-        return ResponseInfo.SUCCESS();
+        return SUCCESS();
     }
 
     @RequiresRoles("超级管理员")
     @DeleteMapping(value = "/userInfo")
     public ResponseInfo deleteUser(UserInfo userInfo) throws Exception {
         userService.deleteUser(userInfo);
-        return ResponseInfo.SUCCESS();
+        return SUCCESS();
     }
 }

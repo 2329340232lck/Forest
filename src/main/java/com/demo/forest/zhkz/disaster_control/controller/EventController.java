@@ -10,6 +10,8 @@ import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import static com.demo.forest.util.ResponseInfo.SUCCESS;
+
 @RestController
 @RequiresRoles(value = {"超级管理员","灾情管理员"},logical = Logical.OR)
 public class EventController {
@@ -19,24 +21,24 @@ public class EventController {
 
     @GetMapping(value = "/event")
     public ResponseInfo queryEventInfo(Page page, EventInfoVo eventInfoVo) throws Exception {
-        return ResponseInfo.SUCCESS(eventService.queryEventInfo(page, eventInfoVo));
+        return SUCCESS(eventService.queryEventInfo(page, eventInfoVo));
     }
 
     @PostMapping(value = "/event")
     public ResponseInfo insertEventInfo(EventInfo eventInfo) throws Exception {
         eventService.insertEventInfo(eventInfo);
-        return ResponseInfo.SUCCESS();
+        return SUCCESS();
     }
 
     @PutMapping(value = "/event")
     public ResponseInfo updateEventInfo(EventInfo eventInfo) throws Exception {
         eventService.updateEventInfo(eventInfo);
-        return ResponseInfo.SUCCESS();
+        return SUCCESS();
     }
 
     @DeleteMapping(value = "/event")
     public ResponseInfo deleteEventInfo(EventInfo eventInfo) throws Exception {
         eventService.deleteEventInfo(eventInfo);
-        return ResponseInfo.SUCCESS();
+        return SUCCESS();
     }
 }

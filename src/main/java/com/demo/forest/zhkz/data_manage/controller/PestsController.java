@@ -9,6 +9,8 @@ import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import static com.demo.forest.util.ResponseInfo.SUCCESS;
+
 @RestController
 @RequiresRoles(value = {"超级管理员", "资料管理员"}, logical = Logical.OR)
 public class PestsController {
@@ -18,24 +20,24 @@ public class PestsController {
 
     @GetMapping(value = "/pests")
     public ResponseInfo queryPestsInfo(Page page, PestsInfo pestsInfo) throws Exception {
-        return ResponseInfo.SUCCESS(pestsService.queryPestsInfo(page, pestsInfo));
+        return SUCCESS(pestsService.queryPestsInfo(page, pestsInfo));
     }
 
     @PostMapping(value = "/pests")
     public ResponseInfo insertPestsInfo(PestsInfo pestsInfo) throws Exception {
         pestsService.insertPestsInfo(pestsInfo);
-        return ResponseInfo.SUCCESS();
+        return SUCCESS();
     }
 
     @PutMapping(value = "/pests")
     public ResponseInfo updatePestsInfo(PestsInfo pestsInfo) throws Exception {
         pestsService.updatePestsInfo(pestsInfo);
-        return ResponseInfo.SUCCESS();
+        return SUCCESS();
     }
 
     @DeleteMapping(value = "/pests")
     public ResponseInfo deletePestsInfo(PestsInfo pestsInfo) throws Exception {
         pestsService.deletePestsInfo(pestsInfo);
-        return ResponseInfo.SUCCESS();
+        return SUCCESS();
     }
 }

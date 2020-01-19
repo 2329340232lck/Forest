@@ -29,6 +29,11 @@
             <artifactId> spring-boot-configuration-processor </artifactId>
             <optional> true </optional>
         </dependency>
+        <!--webSocket-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
         <!--aop-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
