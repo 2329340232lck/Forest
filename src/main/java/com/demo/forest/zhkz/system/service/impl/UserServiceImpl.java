@@ -10,6 +10,7 @@ import com.demo.forest.zhkz.system.domain.UserInfo;
 import com.demo.forest.zhkz.system.service.UserService;
 import com.demo.forest.zhkz.system.vo.MenuVo;
 import com.demo.forest.zhkz.system.vo.UserInfoVo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -22,7 +23,7 @@ public class UserServiceImpl implements UserService {
     @Resource
     private UserDao userDao;
 
-    @Resource
+    @Autowired
     private MybatisService mybatisService;
 
     @Override
@@ -37,7 +38,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public IPage<UserInfoVo> queryUserInfo(Page page, UserInfo userInfo) throws Exception {
-        IPage<Object> objectIPage = mybatisService.selectPage(page, userInfo);
         return userDao.queryUserInfo(page, userInfo);
     }
 

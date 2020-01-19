@@ -40,8 +40,7 @@
                 <!--<img src="">-->
             </div>
             <el-menu
-                    :unique-opened="true"
-                    @select="handleSelect">
+                    :unique-opened="true">
                 <el-submenu v-for="item in dataCache.navMenu"
                             :key="item.menuId"
                             :index="item.menuId + ''">
@@ -60,7 +59,7 @@
         </el-aside>
         <el-container>
             <el-header>
-                <el-menu mode="horizontal" @select="handleSelect">
+                <el-menu mode="horizontal">
                     <el-menu-item index="1">处理中心</el-menu-item>
                     <el-submenu index="2">
                         <template slot="title">我的工作台</template>
@@ -82,7 +81,7 @@
                                    src="/img/user.jpg"></el-avatar>
                         <h4 style="display: inline-block">{{userName}}</h4>
                         <el-button type="text" class="custom_loginOut" icon="el-icon-switch-button" round
-                                   @click="logout">
+                                   @click="userLogout">
                             退出登录
                         </el-button>
                     </div>
@@ -101,6 +100,7 @@
 <!-- import Vue before Element -->
 <script src="/libs/vue/vue.js"></script>
 <!-- import JavaScript -->
+<script type="text/javascript" src="/js/utils.js"></script>
 <script type="text/javascript" src="/libs/element/index.js"></script>
 <script type="text/javascript" src="/js/index.js"></script>
 </html>

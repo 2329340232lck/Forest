@@ -3,16 +3,16 @@ package com.demo.forest.zhkz.system.service.impl;
 import com.demo.forest.zhkz.system.dao.DictionariesDao;
 import com.demo.forest.zhkz.system.domain.DictionariesInfo;
 import com.demo.forest.zhkz.system.service.DictionariesService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 
 @Service
 public class DictionariesServiceImpl implements DictionariesService {
 
-    @Autowired
+    @Resource
     private DictionariesDao dictionariesDao;
 
     @Override
