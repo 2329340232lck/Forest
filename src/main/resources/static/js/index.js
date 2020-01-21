@@ -22,14 +22,13 @@ new Vue({
                 return null;
             }
             console.log("浏览器支持WebSocket，正在启动服务.......");
-            let connectionUrl = 'http://localhost:8081/webSocket/' + getLocalStorageData("user").userName;
-            connectionUrl = connectionUrl.replace("https", "ws").replace("http", "ws");
-            console.debug(connectionUrl);
+            let webSocketUrl = 'http://localhost:8081/webSocket/' + getLocalStorageData("user").userName;
+            webSocketUrl = webSocketUrl.replace("https", "ws").replace("http", "ws");
             if (that.socket != null) {
                 that.socket.close();
                 that.socket = null;
             }
-            socket = new WebSocket(connectionUrl);
+            socket = new WebSocket(webSocketUrl);
             console.log("WebSocket通讯连接建立完成!");
             socket.onopen = function () {
 
