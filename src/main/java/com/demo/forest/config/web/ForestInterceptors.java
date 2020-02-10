@@ -12,8 +12,7 @@ public class ForestInterceptors implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-//        System.out.println("预处理,拦截资源链接：" + request.getRequestURL());
-        return true;
+        return false;
     }
 
     @Override

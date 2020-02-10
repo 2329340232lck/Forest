@@ -5,8 +5,6 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * http工具类
- *
- * @author lck
  */
 public class HttpUtil {
 

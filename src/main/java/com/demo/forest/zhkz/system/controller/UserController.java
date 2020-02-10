@@ -2,7 +2,6 @@ package com.demo.forest.zhkz.system.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.demo.forest.config.exception.custom.ExceptionEnum;
-import com.demo.forest.util.HttpUtil;
 import com.demo.forest.util.ResponseInfo;
 import com.demo.forest.zhkz.system.domain.UserInfo;
 import com.demo.forest.zhkz.system.service.LogService;
@@ -16,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
+import static com.demo.forest.util.HttpUtil.setErrorCode;
+import static com.demo.forest.util.ResponseInfo.ERROR;
 import static com.demo.forest.util.ResponseInfo.SUCCESS;
 
 @RestController
@@ -37,11 +38,11 @@ public class UserController {
             subject.login(token);
             logService.insertLogInfo("用户" + userInfo.getUserName() + "登录系统!");
         } catch (IncorrectCredentialsException | UnknownAccountException e) {
-            return HttpUtil.setErrorCode(response, ResponseInfo.ERROR(ExceptionEnum.USER_LOGIN_FAIL));
+            return setErrorCode(response, ERROR(ExceptionEnum.USER_LOGIN_FAIL));
         } catch (DisabledAccountException e) {
-            return HttpUtil.setErrorCode(response, ResponseInfo.ERROR(ExceptionEnum.DISABLED_ACCOUNT));
+            return setErrorCode(response, ERROR(ExceptionEnum.DISABLED_ACCOUNT));
         } catch (ExcessiveAttemptsException e) {
-            return HttpUtil.setErrorCode(response, ResponseInfo.ERROR(ExceptionEnum.TOO_MANY_ATTEMPTS));
+            return setErrorCode(response, ERROR(ExceptionEnum.TOO_MANY_ATTEMPTS));
         }
         UserInfo info = userService.getUserInfo(userInfo.getUserName());
         info.setUserPassword(null);

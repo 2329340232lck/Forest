@@ -10,7 +10,7 @@ public class ForestApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(ForestApplication.class, args);
-        System.out.println("==================系统启动完成=================");
+        System.out.println("<<--------- System is Active -------->>");
     }
 
 }
