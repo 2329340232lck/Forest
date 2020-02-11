@@ -23,7 +23,7 @@ public abstract class BaseMybatisProvider {
     protected final String AND = " AND ";
 
     //生成查询SQL
-    protected String generateSelectSQL(Object paramObject) throws Exception {
+    String generateSelectSQL(Object paramObject) throws Exception {
         int i = 0;
         Field[] declaredFields = paramObject.getClass().getDeclaredFields();
         SQL sql = new SQL();
@@ -49,7 +49,7 @@ public abstract class BaseMybatisProvider {
     }
 
     //生成插入SQL
-    protected String generateInsertSQL(Object paramObject) throws Exception {
+    String generateInsertSQL(Object paramObject) throws Exception {
         SQL sql = new SQL();
         sql.INSERT_INTO(MybatisUtil.getTableNameValue(paramObject));
         Field[] declaredFields = paramObject.getClass().getDeclaredFields();
@@ -64,7 +64,7 @@ public abstract class BaseMybatisProvider {
     }
 
     //生成更新SQL
-    protected String generateUpdateSQL(Object updateParam, Object conditionParam) throws Exception {
+    String generateUpdateSQL(Object updateParam, Object conditionParam) throws Exception {
         Field[] updateFields = updateParam.getClass().getDeclaredFields();
         Field[] conditionFields = conditionParam.getClass().getDeclaredFields();
         int i = 0;
@@ -85,9 +85,9 @@ public abstract class BaseMybatisProvider {
             if (fieldValue != null) {
                 String fieldName = MybatisUtil.getFieldName(field);
                 if (i == 0) {
-                    where.append(fieldName + EQUAL + "#{conditionObject." + field.getName() + "}");
+                    where.append(fieldName).append(EQUAL).append("#{conditionObject.").append(field.getName()).append("}");
                 } else {
-                    where.append(AND + fieldName + EQUAL + "#{conditionObject." + field.getName() + "}");
+                    where.append(AND).append(fieldName).append(EQUAL).append("#{conditionObject.").append(field.getName()).append("}");
                 }
                 i++;
             }
@@ -97,7 +97,7 @@ public abstract class BaseMybatisProvider {
     }
 
     //生成删除SQL
-    protected String generateDeleteSQL(Object conditionObject) throws Exception {
+    String generateDeleteSQL(Object conditionObject) throws Exception {
         Field[] declaredFields = conditionObject.getClass().getDeclaredFields();
         SQL sql = new SQL();
         sql.DELETE_FROM(MybatisUtil.getTableNameValue(conditionObject));
@@ -121,7 +121,7 @@ public abstract class BaseMybatisProvider {
     }
 
     //生成条件SQL
-    protected String generateConditionSQL(Object conditionObject) throws Exception {
+    String generateConditionSQL(Object conditionObject) throws Exception {
         boolean isFirst = true;
         Field[] declaredFields = conditionObject.getClass().getDeclaredFields();
         StringBuilder sb = new StringBuilder();
@@ -141,22 +141,22 @@ public abstract class BaseMybatisProvider {
     }
 
     //生成参数SQL
-    protected String generateParameterSQL(Object paramObject) throws Exception {
-        Field[] declaredFields = paramObject.getClass().getDeclaredFields();
-        StringBuilder sb = new StringBuilder();
-        boolean isFirst = true;
-        for (Field declaredField : declaredFields) {
-            String fieldName = MybatisUtil.getFieldName(declaredField);
-            Object fieldValue = MybatisUtil.getFieldValue(declaredField, paramObject);
-            if (fieldValue != null) {
-                if (isFirst) {
-                    sb.append("#{paramObject." + fieldName + "}");
-                    isFirst = false;
-                } else {
-                    sb.append(",#{paramObject." + fieldName + "}");
-                }
-            }
-        }
-        return sb.toString();
-    }
+//    protected String generateParameterSQL(Object paramObject) throws Exception {
+//        Field[] declaredFields = paramObject.getClass().getDeclaredFields();
+//        StringBuilder sb = new StringBuilder();
+//        boolean isFirst = true;
+//        for (Field declaredField : declaredFields) {
+//            String fieldName = MybatisUtil.getFieldName(declaredField);
+//            Object fieldValue = MybatisUtil.getFieldValue(declaredField, paramObject);
+//            if (fieldValue != null) {
+//                if (isFirst) {
+//                    sb.append("#{paramObject." + fieldName + "}");
+//                    isFirst = false;
+//                } else {
+//                    sb.append(",#{paramObject." + fieldName + "}");
+//                }
+//            }
+//        }
+//        return sb.toString();
+//    }
 }

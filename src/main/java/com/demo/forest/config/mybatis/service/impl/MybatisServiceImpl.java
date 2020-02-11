@@ -70,9 +70,7 @@ public class MybatisServiceImpl implements MybatisService {
         for (Map<String, ?> map : mapList) {
             try {
                 Class<?> cls = object.getClass();
-                //实例化对象
                 Object instance = cls.newInstance();
-                //获取对象所有字段
                 Field[] declaredFields = cls.getDeclaredFields();
                 for (Field field : declaredFields) {
                     String fieldName = field.getName();
